@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.dailymoodcare"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.dailymoodcare"
         minSdk = 30
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
