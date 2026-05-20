@@ -1,0 +1,196 @@
+# 구현 시 우선순위
+
+## 1단계: 필수 구조 구현
+
+- `MainActivity`
+- `ResultActivity`
+- `VideoRecommendActivity`
+- `DetailActivity`
+- `UserCondition`
+- Intent 데이터 전달
+
+## 2단계: 기본 추천 로직 구현
+
+- `InputValidator`
+- `SleepAdvisor`
+- `RoutineAdvisor`
+- `SampleDataProvider`
+
+## 3단계: API 연결
+
+- `RetrofitClient`
+- `WeatherApiService`
+- `WeatherRepository`
+- `GeminiApiService`
+- `GeminiRepository`
+- `YouTubeApiService`
+- `YouTubeRepository`
+
+## 4단계: UI 목록 구현
+
+- `VideoAdapter`
+- `PlaceAdapter`
+- RecyclerView 적용
+- Glide로 썸네일 표시
+
+## 5단계: 외부 앱 연동
+
+- YouTube 앱 열기
+- 지도 앱 검색
+- 캘린더 앱 일정 추가
+
+## 6단계: 안정성 보강
+
+- API 실패 처리
+- 빈 응답 처리
+- 입력값 검증
+- 외부 앱 실행 실패 처리
+- 네트워크 오류 메시지 표시
+
+---
+
+# 평가 기준 대응표
+
+| 평가 항목         | 구현 내용                                                            |
+| ----------------- | -------------------------------------------------------------------- |
+| Activity 3개 이상 | MainActivity, ResultActivity, VideoRecommendActivity, DetailActivity |
+| Intent            | MainActivity에서 ResultActivity로 UserCondition 전달                 |
+| Coroutine         | OpenWeather, Gemini, YouTube API 비동기 호출                         |
+| 다운로드 매니저   | Retrofit으로 외부 API 호출, Glide로 영상 썸네일 로딩                 |
+| Jetpack Library   | RecyclerView 사용, 필요 시 Fragment/ViewPager2 추가                  |
+| 외부 APP 연동     | YouTube 앱 열기, 지도 앱 검색, 캘린더 앱 열기                        |
+| API               | OpenWeather API, Gemini API, YouTube Data API                        |
+| 머신러닝/API      | Gemini API를 활용한 사용자 상태 기반 장소 추천                       |
+| 안정성            | 입력값 검증, API 실패 처리, 기본 추천 제공                           |
+| 디자인            | DESIGN.md 기반 카드형 UI, 색상/여백/버튼 스타일 통일                 |
+
+---
+
+# 추가 권장 사항
+
+## `README.md`
+
+발표와 제출을 위해 프로젝트 설명을 정리한다.
+
+포함하면 좋은 내용:
+
+- 앱 개요
+- 주요 기능
+- 사용 API
+- 사용 기술
+- 평가 기준 충족표
+- 실행 방법
+- API Key 설정 방법
+- 시연 흐름
+
+---
+
+# 프로젝트 전체 확인 하네스
+
+1. Activity가 3개 이상 존재하는지 확인
+2. Activity 간 Intent 데이터 전달이 1개 이상 구현되었는지 확인
+3. Coroutine이 사용되었는지 확인
+4. Glide, Retrofit, Volley 중 하나 이상이 사용되었는지 확인
+5. Jetpack Library가 3개 이상 활용되었는지 확인
+   - RecyclerView
+   - Fragment
+   - ViewPager
+   - DrawerLayout 중 3개 이상
+6. 외부 API가 3개 이상 사용되었는지 확인
+   - OpenWeather API
+   - Gemini API
+   - YouTube Data API
+7. API 호출이 실제 앱 기능에 연결되어 있는지 확인
+   - 단순 호출만 하지 않고 결과가 UI에 반영되는지
+8. 외부 앱 연동이 1개 이상 구현되었는지 확인
+   - YouTube 앱 열기
+   - 지도 앱 열기
+   - 캘린더 앱 열기 등
+9. 머신러닝 모델(TFLite)이 앱 내에 정상적으로 적용되었는지 확인 (50점 항목)
+   - 파이썬 등에서 직접 학습시킨 `.tflite` 파일이 안드로이드 `assets` 폴더에 존재하는지 확인
+   - TFLite 모델 적용 사실과 개발 과정을 발표 자료(PPT)에 명시했는지 확인
+
+10. 머신러닝 모델의 입력/출력 흐름이 정상적으로 동작하는지 확인
+
+- 사용자 입력값(예: 수면 시간, 공부 시간 등)이 TFLite 추론을 위한 Tensor 형식으로 올바르게 변환되는지 확인
+- 추론된 예측 결과(학생 성과 퍼센트 등)가 UI에 정상적으로 반영되는지 확인
+
+11. 머신러닝 추론 과정에서 앱이 멈추거나 종료되지 않는지 확인 (안정성)
+
+- 추론 작업이 메인 스레드(UI)를 블로킹하지 않도록 Coroutine(비동기) 환경에서 처리되는지 확인
+- assets 폴더에서 모델을 불러오지 못하는 예외 상황 발생 시, 앱이 죽지 않고 에러 메시지를 띄우는지 확인
+- 모델에 주입하기 전, 사용자 입력값 검증(빈칸, 음수, 타입 오류 등)이 완벽하게 이루어지는지 확인
+
+12. 런타임 중 비정상 종료가 일어나지 않는지 확인
+13. 네트워크 오류 상황에서 앱이 죽지 않는지 확인
+
+- 인터넷 끊김
+- API 응답 실패
+- API key 누락
+- 빈 응답
+
+14. 사용자 입력값 검증이 있는지 확인
+
+- 수면 시간 미입력
+- 음수 입력
+- 24시간 초과 입력
+- 스트레스/기분 선택 안 함
+
+15. API Key가 GitHub에 노출되지 않았는지 확인
+
+- local.properties 또는 BuildConfig 사용
+- README에 직접 key 작성 금지
+
+16. DESIGN.md에 맞게 UI가 작성되었는지 확인
+
+- 색상
+- 카드 스타일
+- 버튼 스타일
+- 여백
+- 폰트 크기
+- 화면별 일관성
+
+17. RecyclerView에 실제 API 결과 또는 추천 데이터가 표시되는지 확인
+18. 로딩 상태가 표시되는지 확인
+
+- ProgressBar
+- 로딩 텍스트
+- 버튼 비활성화 등
+
+19. 빈 상태 화면이 있는지 확인
+
+- 추천 영상 없음
+- 장소 추천 실패
+- 날씨 정보 없음
+
+20. 에러 메시지가 사용자 친화적인지 확인
+
+- "오류 발생"만 표시하지 않기
+- "날씨 정보를 불러오지 못했습니다. 기본 추천을 표시합니다."처럼 표시
+
+21. 시연용 샘플 데이터 입력 버튼이 있는지 확인
+22. 발표 시연 흐름이 1분 이내로 가능한지 확인
+23. 앱 실행 후 주요 기능까지 클릭 수가 너무 많지 않은지 확인
+24. 화면 회전 또는 뒤로가기에서 비정상 종료가 없는지 확인
+25. AndroidManifest.xml에 필요한 권한이 선언되어 있는지 확인
+
+- INTERNET
+- ACCESS_FINE_LOCATION 또는 위치를 쓴다면 관련 권한
+
+26. 위치 권한 거부 시에도 앱이 동작하는지 확인
+
+- 기본 지역 입력 방식 제공
+
+27. Gradle 빌드가 깨지지 않는지 확인
+28. README.md에 프로젝트 설명, 사용 API, 주요 기능, 실행 방법이 작성되어 있는지 확인
+
+---
+
+# 구현 시 주의사항
+
+- 기능을 구현할 때마다 어떤 평가 항목을 만족하는지 주석 또는 README에 기록한다.
+- Activity, Intent, Coroutine, Retrofit, RecyclerView, Fragment, ViewPager 사용 위치를 README에 표로 정리한다.
+- API 호출 실패 시 앱이 종료되지 않도록 try-catch 또는 Result 처리 구조를 반드시 사용한다.
+- 모든 사용자 입력은 검증 후 다음 화면으로 이동한다.
+- 디자인은 DESIGN.md의 색상, 여백, 카드 스타일, 버튼 스타일을 따른다.
+- 시연을 위해 샘플 데이터 자동 입력 버튼을 구현한다.
