@@ -1,0 +1,105 @@
+{
+  "feature_columns": [
+    "difficulty_falling_asleep",
+    "sleep_hours",
+    "wake_up_during_night",
+    "sleep_quality",
+    "concentration_difficulty",
+    "device_before_sleep",
+    "caffeine_intake",
+    "physical_activity",
+    "academic_stress"
+  ],
+  "target_column": "daytime_fatigue",
+  "input_mappings": {
+    "difficulty_falling_asleep": {
+      "Never": 0,
+      "Rarely (1-2 times a week)": 1,
+      "Sometimes (3-4 times a week)": 2,
+      "Often (5-6 times a week)": 3,
+      "Every night": 4,
+      "Every day": 4
+    },
+    "sleep_hours": {
+      "Less than 4 hours": 0,
+      "4-5 hours": 1,
+      "6-7 hours": 2,
+      "7-8 hours": 3,
+      "More than 8 hours": 4
+    },
+    "wake_up_during_night": {
+      "Never": 0,
+      "Rarely (1-2 times a week)": 1,
+      "Sometimes (3-4 times a week)": 2,
+      "Often (5-6 times a week)": 3,
+      "Every night": 4,
+      "Every day": 4
+    },
+    "sleep_quality": {
+      "Very poor": 0,
+      "Poor": 1,
+      "Average": 2,
+      "Good": 3,
+      "Very good": 4
+    },
+    "concentration_difficulty": {
+      "Never": 0,
+      "Rarely": 1,
+      "Sometimes": 2,
+      "Often": 3,
+      "Always": 4
+    },
+    "device_before_sleep": {
+      "Never": 0,
+      "Rarely (1-2 times a week)": 1,
+      "Sometimes (3-4 times a week)": 2,
+      "Often (5-6 times a week)": 3,
+      "Every night": 4,
+      "Every day": 4
+    },
+    "caffeine_intake": {
+      "Never": 0,
+      "Rarely (1-2 times a week)": 1,
+      "Sometimes (3-4 times a week)": 2,
+      "Often (5-6 times a week)": 3,
+      "Every night": 4,
+      "Every day": 4
+    },
+    "physical_activity": {
+      "Never": 0,
+      "Rarely (1-2 times a week)": 1,
+      "Sometimes (3-4 times a week)": 2,
+      "Often (5-6 times a week)": 3,
+      "Every night": 4,
+      "Every day": 4
+    },
+    "academic_stress": {
+      "No stress": 0,
+      "Low stress": 1,
+      "High stress": 2,
+      "Extremely high stress": 3
+    },
+    "daytime_fatigue": {
+      "Never": 0,
+      "Rarely": 1,
+      "Sometimes": 2,
+      "Often": 3,
+      "Always": 4
+    }
+  },
+  "output_labels": {
+    "0": "낮은 피로도",
+    "1": "보통 피로도",
+    "2": "높은 피로도"
+  },
+  "healing_levels": {
+    "0": "작은 힐링 필요",
+    "1": "중간 힐링 필요",
+    "2": "큰 힐링 필요"
+  },
+  "app_interpretation": {
+    "낮은 피로도": "현재 피로도가 낮으므로 짧은 휴식과 컨디션 유지 루틴을 추천한다.",
+    "보통 피로도": "피로가 누적될 가능성이 있으므로 가벼운 힐링 루틴을 추천한다.",
+    "높은 피로도": "피로도가 높게 예측되므로 충분한 휴식과 강한 힐링 루틴을 추천한다."
+  }
+}
