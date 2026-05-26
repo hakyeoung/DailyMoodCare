@@ -224,6 +224,13 @@
                     android:textColor="#5B6778"
                     android:textSize="15sp"
                     tools:text="피로도가 높게 예측되므로 충분한 휴식과 강한 힐링 루틴을 추천한다." />
+                    
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_recommend_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="16dp"
+                    android:text="맞춤형 힐링 영상 &amp; 루틴 보기" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>

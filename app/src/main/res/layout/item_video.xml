@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:layout_marginBottom="8dp"
+    android:background="@android:color/white"
+    android:elevation="2dp">
+
+    <ImageView
+        android:id="@+id/iv_video_thumbnail"
+        android:layout_width="120dp"
+        android:layout_height="90dp"
+        android:scaleType="centerCrop"
+        android:background="#DDDDDD"
+        android:contentDescription="썸네일 이미지" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="12dp">
+
+        <TextView
+            android:id="@+id/tv_video_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="비디오 제목" />
+
+        <TextView
+            android:id="@+id/tv_video_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textSize="14sp"
+            android:textColor="#666666"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="비디오 설명" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var resultTitleText: TextView
     private lateinit var healingLevelText: TextView
     private lateinit var resultDescriptionText: TextView
+    private lateinit var btnRecommendVideo: MaterialButton
 
     private var interpreter: Interpreter? = null
 
@@ -76,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         resultTitleText = findViewById(R.id.resultTitleText)
         healingLevelText = findViewById(R.id.healingLevelText)
         resultDescriptionText = findViewById(R.id.resultDescriptionText)
+        btnRecommendVideo = findViewById(R.id.btn_recommend_video)
     }
 
     private fun setupActions() {
@@ -207,6 +209,14 @@ class MainActivity : AppCompatActivity() {
         healingLevelText.text = result.healingLevel
         resultDescriptionText.text = result.description
         resultCard.visibility = View.VISIBLE
+        
+        btnRecommendVideo.setOnClickListener {
+            val intent = android.content.Intent(this, VideoRecommendActivity::class.java).apply {
+                putExtra("USER_CONDITION", result.label)
+                putExtra("HEALING_LEVEL", result.healingLevel)
+            }
+            startActivity(intent)
+        }
     }
 
     private fun setLoading(isLoading: Boolean) {
