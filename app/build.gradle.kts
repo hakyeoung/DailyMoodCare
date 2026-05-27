@@ -13,6 +13,7 @@ if (localPropertiesFile.exists()) {
 
 val youtubeApiKey: String = localProperties.getProperty("YOUTUBE_API_KEY") ?: ""
 val geminiApiKey: String = localProperties.getProperty("GEMINI_API_KEY") ?: ""
+val weatherApiKey: String = localProperties.getProperty("WEATHER_API_KEY") ?: ""
 
 android {
     namespace = "com.example.dailymoodcare"
@@ -29,6 +30,7 @@ android {
         
         buildConfigField("String", "YOUTUBE_API_KEY", "\"$youtubeApiKey\"")
         buildConfigField("String", "GEMINI_API_KEY", "\"$geminiApiKey\"")
+        buildConfigField("String", "WEATHER_API_KEY", "\"$weatherApiKey\"")
     }
 
     buildFeatures {
