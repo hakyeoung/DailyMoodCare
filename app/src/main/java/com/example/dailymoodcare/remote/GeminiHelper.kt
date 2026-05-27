@@ -6,7 +6,7 @@ import com.google.ai.client.generativeai.GenerativeModel
 class GeminiHelper(private val apiKey: String) {
 
     private val generativeModel = GenerativeModel(
-        modelName = "gemini-1.5-flash",
+        modelName = "gemini-2.5-flash",
         apiKey = apiKey
     )
     
