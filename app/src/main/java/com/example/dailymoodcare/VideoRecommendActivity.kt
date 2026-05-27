@@ -13,6 +13,7 @@ import com.example.dailymoodcare.data.VideoItem
 import com.example.dailymoodcare.remote.GeminiHelper
 import com.example.dailymoodcare.remote.RetrofitClient
 import com.example.dailymoodcare.repository.GeminiRepository
+import com.example.dailymoodcare.repository.WeatherRepository
 import com.example.dailymoodcare.repository.YouTubeRepository
 import com.example.dailymoodcare.ui.VideoAdapter
 import kotlinx.coroutines.launch
@@ -21,6 +22,8 @@ class VideoRecommendActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var videoAdapter: VideoAdapter
+    private lateinit var tvRecommendTitle: TextView
+    private lateinit var tvWeatherInfo: TextView
     private lateinit var tvGeminiAdvice: TextView
     private lateinit var progressBarVideos: ProgressBar
 
@@ -29,6 +32,8 @@ class VideoRecommendActivity : AppCompatActivity() {
         setContentView(R.layout.activity_video_recommend)
 
         recyclerView = findViewById(R.id.rv_videos)
+        tvRecommendTitle = findViewById(R.id.tv_recommend_title)
+        tvWeatherInfo = findViewById(R.id.tv_weather_info)
         tvGeminiAdvice = findViewById(R.id.tv_gemini_advice)
         progressBarVideos = findViewById(R.id.progressBarVideos)
 
@@ -49,16 +54,28 @@ class VideoRecommendActivity : AppCompatActivity() {
         val userCondition = intent.getStringExtra("USER_CONDITION") ?: "피로도 알 수 없음"
         val healingLevel = intent.getStringExtra("HEALING_LEVEL") ?: "힐링"
 
-        loadGeminiAdvice(userCondition)
+        loadGeminiAdvice(userCondition, healingLevel)
         loadYouTubeVideos(healingLevel)
     }
 
-    private fun loadGeminiAdvice(condition: String) {
+    private fun loadGeminiAdvice(condition: String, healingLevel: String) {
         val geminiKey = BuildConfig.GEMINI_API_KEY
         val geminiRepository = GeminiRepository(GeminiHelper(geminiKey))
+        val weatherRepository = WeatherRepository(
+            RetrofitClient.weatherApiService,
+            BuildConfig.WEATHER_API_KEY
+        )
 
         lifecycleScope.launch {
-            val advice = geminiRepository.getHealingRecommendation(condition)
+            tvGeminiAdvice.text = "부산 현재 날씨와 스트레스 정도를 확인해 힐링 장소를 추천받는 중입니다..."
+            val weatherSummary = weatherRepository.getBusanCurrentWeatherSummary()
+            tvWeatherInfo.text = weatherSummary
+            tvRecommendTitle.text = "추천 여행지"
+            val advice = geminiRepository.getBusanHealingPlaceRecommendation(
+                stressLevel = condition,
+                healingLevel = healingLevel,
+                weatherSummary = weatherSummary
+            )
             tvGeminiAdvice.text = advice
         }
     }
