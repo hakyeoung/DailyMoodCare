@@ -22,6 +22,8 @@ class VideoRecommendActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var videoAdapter: VideoAdapter
+    private lateinit var tvRecommendTitle: TextView
+    private lateinit var tvWeatherInfo: TextView
     private lateinit var tvGeminiAdvice: TextView
     private lateinit var progressBarVideos: ProgressBar
 
@@ -30,6 +32,8 @@ class VideoRecommendActivity : AppCompatActivity() {
         setContentView(R.layout.activity_video_recommend)
 
         recyclerView = findViewById(R.id.rv_videos)
+        tvRecommendTitle = findViewById(R.id.tv_recommend_title)
+        tvWeatherInfo = findViewById(R.id.tv_weather_info)
         tvGeminiAdvice = findViewById(R.id.tv_gemini_advice)
         progressBarVideos = findViewById(R.id.progressBarVideos)
 
@@ -65,6 +69,8 @@ class VideoRecommendActivity : AppCompatActivity() {
         lifecycleScope.launch {
             tvGeminiAdvice.text = "부산 현재 날씨와 스트레스 정도를 확인해 힐링 장소를 추천받는 중입니다..."
             val weatherSummary = weatherRepository.getBusanCurrentWeatherSummary()
+            tvWeatherInfo.text = weatherSummary
+            tvRecommendTitle.text = "추천 여행지"
             val advice = geminiRepository.getBusanHealingPlaceRecommendation(
                 stressLevel = condition,
                 healingLevel = healingLevel,

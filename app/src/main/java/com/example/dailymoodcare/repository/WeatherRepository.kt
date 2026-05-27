@@ -36,7 +36,7 @@ class WeatherRepository(
                     }
                     .toMap()
 
-                buildWeatherSummary(values)
+                buildWeatherSummary(baseDateTime, values)
             } catch (e: Exception) {
                 "부산 날씨 정보를 가져오지 못했습니다(${e.localizedMessage ?: "네트워크 오류"})."
             }
@@ -52,27 +52,32 @@ class WeatherRepository(
         val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.KOREA).apply {
             timeZone = TimeZone.getTimeZone("Asia/Seoul")
         }
-        val timeFormat = SimpleDateFormat("HH00", Locale.KOREA).apply {
+        val requestDateFormat = SimpleDateFormat("yyyy년 M월 d일", Locale.KOREA).apply {
+            timeZone = TimeZone.getTimeZone("Asia/Seoul")
+        }
+        val requestTimeFormat = SimpleDateFormat("HH:mm", Locale.KOREA).apply {
             timeZone = TimeZone.getTimeZone("Asia/Seoul")
         }
 
         return BaseDateTime(
             date = dateFormat.format(calendar.time),
-            time = timeFormat.format(calendar.time)
+            time = "%02d00".format(calendar.get(Calendar.HOUR_OF_DAY)),
+            label = "${requestDateFormat.format(calendar.time)} ${requestTimeFormat.format(calendar.time)}"
         )
     }
 
-    private fun buildWeatherSummary(values: Map<String, String>): String {
+    private fun buildWeatherSummary(baseDateTime: BaseDateTime, values: Map<String, String>): String {
         val temperature = values["T1H"]?.let { "${it}도" } ?: "기온 정보 없음"
         val rain = values["RN1"]?.let { "1시간 강수량 ${it}mm" } ?: "강수량 정보 없음"
         val humidity = values["REH"]?.let { "습도 ${it}%" } ?: "습도 정보 없음"
         val wind = values["WSD"]?.let { "풍속 ${it}m/s" } ?: "풍속 정보 없음"
 
-        return "부산 현재 날씨: $temperature, $rain, $humidity, $wind"
+        return "부산 날씨(${baseDateTime.label} 기준): $temperature, $rain, $humidity, $wind"
     }
 
     private data class BaseDateTime(
         val date: String,
-        val time: String
+        val time: String,
+        val label: String
     )
 }

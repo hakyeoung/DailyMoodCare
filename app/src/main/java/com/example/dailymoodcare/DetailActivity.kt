@@ -1,8 +1,10 @@
 package com.example.dailymoodcare
 
 import android.os.Bundle
+import android.webkit.CookieManager
 import android.webkit.WebChromeClient
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -33,21 +35,42 @@ class DetailActivity : AppCompatActivity() {
             webView.settings.apply {
                 javaScriptEnabled = true
                 domStorageEnabled = true
-                mediaPlaybackRequiresUserGesture = false
+                mediaPlaybackRequiresUserGesture = true
+                loadsImagesAutomatically = true
             }
+            CookieManager.getInstance().setAcceptCookie(true)
+            CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
             webView.webChromeClient = WebChromeClient()
-            webView.webViewClient = android.webkit.WebViewClient()
+            webView.webViewClient = WebViewClient()
+
             val embedHtml = """
-                <html>
-                <body style="margin:0;padding:0;">
-                <iframe width="100%" height="100%" 
-                        src="https://www.youtube.com/embed/$videoId?autoplay=1" 
-                        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-                </iframe>
+                <!doctype html>
+                <html lang="ko">
+                <head>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <meta name="referrer" content="strict-origin-when-cross-origin">
+                    <style>
+                        html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; }
+                        iframe { width: 100%; height: 100%; border: 0; display: block; }
+                    </style>
+                </head>
+                <body>
+                    <iframe
+                        src="https://www.youtube-nocookie.com/embed/$videoId?autoplay=0&playsinline=1&rel=0&origin=https://www.youtube-nocookie.com"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
                 </body>
                 </html>
             """.trimIndent()
-            webView.loadData(embedHtml, "text/html", "utf-8")
+            webView.loadDataWithBaseURL(
+                "https://www.youtube-nocookie.com/",
+                embedHtml,
+                "text/html",
+                "utf-8",
+                null
+            )
         }
     }
 }
