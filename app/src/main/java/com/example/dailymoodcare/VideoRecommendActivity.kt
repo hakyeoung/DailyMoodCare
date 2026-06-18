@@ -1,6 +1,8 @@
 package com.example.dailymoodcare
 
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
@@ -26,6 +28,7 @@ class VideoRecommendActivity : AppCompatActivity() {
     private lateinit var tvWeatherInfo: TextView
     private lateinit var tvGeminiAdvice: TextView
     private lateinit var progressBarVideos: ProgressBar
+    private lateinit var tvVideoEmpty: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +39,7 @@ class VideoRecommendActivity : AppCompatActivity() {
         tvWeatherInfo = findViewById(R.id.tv_weather_info)
         tvGeminiAdvice = findViewById(R.id.tv_gemini_advice)
         progressBarVideos = findViewById(R.id.progressBarVideos)
+        tvVideoEmpty = findViewById(R.id.tv_video_empty)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -60,10 +64,24 @@ class VideoRecommendActivity : AppCompatActivity() {
 
     private fun loadGeminiAdvice(condition: String, healingLevel: String) {
         val geminiKey = BuildConfig.GEMINI_API_KEY
+        val weatherKey = BuildConfig.WEATHER_API_KEY
+
+        if (!isNetworkAvailable()) {
+            tvWeatherInfo.text = "네트워크 연결을 확인해 주세요."
+            tvGeminiAdvice.text = "네트워크 연결 후 부산 힐링 장소 추천을 다시 확인할 수 있습니다."
+            return
+        }
+
+        if (geminiKey.isBlank() || weatherKey.isBlank()) {
+            tvWeatherInfo.text = "날씨 또는 Gemini API 키가 설정되지 않았습니다."
+            tvGeminiAdvice.text = "local.properties에 GEMINI_API_KEY와 WEATHER_API_KEY를 설정해 주세요."
+            return
+        }
+
         val geminiRepository = GeminiRepository(GeminiHelper(geminiKey))
         val weatherRepository = WeatherRepository(
             RetrofitClient.weatherApiService,
-            BuildConfig.WEATHER_API_KEY
+            weatherKey
         )
 
         lifecycleScope.launch {
@@ -81,10 +99,21 @@ class VideoRecommendActivity : AppCompatActivity() {
     }
 
     private fun loadYouTubeVideos(healingLevel: String) {
+        val youtubeKey = BuildConfig.YOUTUBE_API_KEY
+        if (!isNetworkAvailable()) {
+            showVideoMessage("네트워크 연결을 확인해 주세요.")
+            return
+        }
+
+        if (youtubeKey.isBlank()) {
+            showVideoMessage("YouTube API 키가 설정되지 않았습니다. local.properties를 확인해 주세요.")
+            return
+        }
+
         progressBarVideos.visibility = View.VISIBLE
         recyclerView.visibility = View.GONE
+        tvVideoEmpty.visibility = View.GONE
 
-        val youtubeKey = BuildConfig.YOUTUBE_API_KEY
         val youtubeRepository = YouTubeRepository(RetrofitClient.youtubeApiService, youtubeKey)
 
         lifecycleScope.launch {
@@ -92,7 +121,13 @@ class VideoRecommendActivity : AppCompatActivity() {
             val videos = youtubeRepository.searchHealingVideos(query)
             
             progressBarVideos.visibility = View.GONE
+            if (videos.isEmpty()) {
+                showVideoMessage("추천 영상을 찾지 못했습니다. 잠시 후 다시 시도해 주세요.")
+                return@launch
+            }
+
             recyclerView.visibility = View.VISIBLE
+            tvVideoEmpty.visibility = View.GONE
             
             videoAdapter = VideoAdapter(videos) { videoItem ->
                 val intent = Intent(this@VideoRecommendActivity, DetailActivity::class.java).apply {
@@ -104,5 +139,19 @@ class VideoRecommendActivity : AppCompatActivity() {
             }
             recyclerView.adapter = videoAdapter
         }
+    }
+
+    private fun showVideoMessage(message: String) {
+        progressBarVideos.visibility = View.GONE
+        recyclerView.visibility = View.GONE
+        tvVideoEmpty.text = message
+        tvVideoEmpty.visibility = View.VISIBLE
+    }
+
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = getSystemService(ConnectivityManager::class.java)
+        val network = connectivityManager.activeNetwork ?: return false
+        val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 }
