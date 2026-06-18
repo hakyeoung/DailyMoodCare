@@ -1,10 +1,14 @@
 package com.example.dailymoodcare
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.webkit.CookieManager
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -13,6 +17,7 @@ class DetailActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private lateinit var tvTitle: TextView
     private lateinit var tvDescription: TextView
+    private lateinit var btnOpenYoutubeApp: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +26,7 @@ class DetailActivity : AppCompatActivity() {
         webView = findViewById(R.id.webview_youtube)
         tvTitle = findViewById(R.id.tv_detail_title)
         tvDescription = findViewById(R.id.tv_detail_description)
+        btnOpenYoutubeApp = findViewById(R.id.btn_open_youtube_app)
 
         // VideoRecommendActivity에서 전달된 데이터 받기
         val videoId = intent.getStringExtra("VIDEO_ID") ?: ""
@@ -29,6 +35,10 @@ class DetailActivity : AppCompatActivity() {
 
         tvTitle.text = title
         tvDescription.text = desc
+        btnOpenYoutubeApp.isEnabled = videoId.isNotEmpty()
+        btnOpenYoutubeApp.setOnClickListener {
+            openYoutubeExternally(videoId)
+        }
 
         // WebView 설정하여 유튜브 영상 재생
         if (videoId.isNotEmpty()) {
@@ -71,6 +81,22 @@ class DetailActivity : AppCompatActivity() {
                 "utf-8",
                 null
             )
+        }
+    }
+
+    private fun openYoutubeExternally(videoId: String) {
+        if (videoId.isEmpty()) return
+
+        val youtubeAppIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
+        val browserIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("https://www.youtube.com/watch?v=$videoId")
+        )
+
+        try {
+            startActivity(youtubeAppIntent)
+        } catch (e: ActivityNotFoundException) {
+            startActivity(browserIntent)
         }
     }
 }

@@ -26,6 +26,13 @@
         android:layout_height="wrap_content"
         android:text="상세 설명"
         android:textSize="16sp"
+        android:layout_marginBottom="16dp"
         android:lineSpacingExtra="4dp" />
+
+    <Button
+        android:id="@+id/btn_open_youtube_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="YouTube 앱에서 열기" />
 
 </LinearLayout>
