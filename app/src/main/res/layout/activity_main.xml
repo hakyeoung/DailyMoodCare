@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="오늘 상태를 선택하면 머신러닝 모델이 낮 시간 피로도를 예측합니다."
+            android:text="오늘 상태를 선택하면 머신러닝 모델이 낮 시간 피로도를 분석합니다."
             android:textColor="#5B6778"
             android:textSize="15sp" />
 
@@ -73,12 +73,12 @@
 
                 <TextView style="@style/TextAppearance.MaterialComponents.Subtitle1" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="2. 오늘 수면 시간은 어느 정도인가요?" android:textColor="#1B2634" android:textStyle="bold" />
                 <RadioGroup android:id="@+id/groupSleepHours" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp">
-                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="0" android:text="4시간 미만" />
-                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="1" android:text="4~5시간" />
+                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="4" android:text="4시간 미만" />
+                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="3" android:text="4~5시간" />
                     <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="2" android:text="5~6시간" />
-                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="2" android:text="6~7시간" />
-                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="3" android:text="7~8시간" />
-                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="4" android:text="8시간 이상" />
+                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="1" android:text="6~7시간" />
+                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="0" android:text="7~8시간" />
+                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="0" android:text="8시간 이상" />
                 </RadioGroup>
 
                 <TextView style="@style/TextAppearance.MaterialComponents.Subtitle1" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="3. 밤중에 자주 깼나요?" android:textColor="#1B2634" android:textStyle="bold" />
@@ -92,11 +92,11 @@
 
                 <TextView style="@style/TextAppearance.MaterialComponents.Subtitle1" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="4. 오늘 수면의 질은 어땠나요?" android:textColor="#1B2634" android:textStyle="bold" />
                 <RadioGroup android:id="@+id/groupSleepQuality" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp">
-                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="0" android:text="매우 나쁨" />
-                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="1" android:text="나쁨" />
+                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="4" android:text="매우 나쁨" />
+                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="3" android:text="나쁨" />
                     <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="2" android:text="보통" />
-                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="3" android:text="좋음" />
-                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="4" android:text="매우 좋음" />
+                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="1" android:text="좋음" />
+                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="0" android:text="매우 좋음" />
                 </RadioGroup>
 
                 <TextView style="@style/TextAppearance.MaterialComponents.Subtitle1" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="5. 수면 부족 때문에 집중이 어려웠나요?" android:textColor="#1B2634" android:textStyle="bold" />
@@ -128,16 +128,16 @@
 
                 <TextView style="@style/TextAppearance.MaterialComponents.Subtitle1" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="8. 운동을 했나요?" android:textColor="#1B2634" android:textStyle="bold" />
                 <RadioGroup android:id="@+id/groupPhysicalActivity" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp">
-                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="0" android:text="안 함" />
-                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="1" android:text="가볍게" />
+                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="4" android:text="안 함" />
+                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="3" android:text="가볍게" />
                     <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="2" android:text="보통" />
-                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="3" android:text="자주" />
-                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="4" android:text="많이" />
+                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="1" android:text="자주" />
+                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="0" android:text="많이" />
                 </RadioGroup>
 
                 <TextView style="@style/TextAppearance.MaterialComponents.Subtitle1" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="9. 학업 스트레스는 어느 정도인가요?" android:textColor="#1B2634" android:textStyle="bold" />
                 <RadioGroup android:id="@+id/groupAcademicStress" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp">
-                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="1" android:text="낮음" />
+                    <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="0" android:text="낮음" />
                     <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="1" android:text="보통" />
                     <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="2" android:text="높음" />
                     <RadioButton android:layout_width="match_parent" android:layout_height="wrap_content" android:tag="3" android:text="매우 높음" />
@@ -166,7 +166,7 @@
                 android:layout_height="52dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:text="피로도 예측" />
+                android:text="피로도 분석" />
         </LinearLayout>
 
         <ProgressBar
